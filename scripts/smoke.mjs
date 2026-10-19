@@ -26,10 +26,21 @@ const context = await browser.newContext({
 });
 const foreign = [],
 	writes = [],
+	analytics = [],
 	violations = [],
 	pageErrors = [];
 context.on("request", (r) => {
 	const u = new URL(r.url());
+	const isAnalytics =
+		u.protocol === "https:" &&
+		((u.hostname === "static.cloudflareinsights.com" &&
+			u.pathname.startsWith("/beacon.min.js")) ||
+			(u.hostname === "cloudflareinsights.com" &&
+				u.pathname === "/cdn-cgi/rum"));
+	if (isAnalytics) {
+		if (r.method() === "POST") analytics.push(r.postData() || "");
+		return;
+	}
 	if (
 		["http:", "https:"].includes(u.protocol) &&
 		u.origin !== new URL(base).origin
@@ -86,7 +97,9 @@ async function home() {
 		"文件格式转换",
 	);
 	await expect(page.locator(".file-category-card")).toHaveCount(4);
-	await expect(page.getByRole("navigation", { name: "十三月工具导航" }).locator("a")).toHaveCount(6);
+	await expect(
+		page.getByRole("navigation", { name: "十三月工具导航" }).locator("a"),
+	).toHaveCount(6);
 	await expect(
 		page.locator(".file-category-card").filter({ hasText: "音频" }),
 	).toContainText("就绪", { timeout: 90000 });
@@ -496,6 +509,23 @@ try {
 	expect(writes, "Browser file uploads").toEqual([]);
 	expect(violations, "Unexpected CSP violations").toEqual([]);
 	expect(pageErrors, "Browser errors").toEqual([]);
+	for (const payload of analytics) {
+		for (const marker of [
+			"图片样例.png",
+			"音频样例.wav",
+			"文档样例.md",
+			"视频样例.mp4",
+			"image.png",
+			"audio.wav",
+			"document.docx",
+			"十三月转换验证",
+		]) {
+			expect(
+				payload,
+				"Analytics must not contain filenames or document content",
+			).not.toContain(marker);
+		}
+	}
 	console.log(
 		JSON.stringify(
 			{

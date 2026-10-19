@@ -10,13 +10,13 @@ convert.afeiii.com {
     Cross-Origin-Opener-Policy "same-origin"
     Cross-Origin-Embedder-Policy "require-corp"
     Cross-Origin-Resource-Policy "same-origin"
-    Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; media-src 'self' blob: data:; font-src 'self'; connect-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
+    Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; media-src 'self' blob: data:; font-src 'self'; connect-src 'self' blob: https://cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
   }
   @write not method GET HEAD
   respond @write 405
   @private path /convert /convert/* /debug /debug/*
   header @private X-Robots-Tag "noindex, nofollow"
-  @html path / /about /about/* /privacy /privacy/* /formats /formats/* /settings /settings/* /convert /convert/* /debug /debug/* /terms /terms/* /contact /contact/* /sw.js /build-info.json
+  @html path / /about /about/* /privacy /privacy/* /formats /formats/* /settings /settings/* /convert /convert/* /debug /debug/* /terms /terms/* /contact /contact/* /sw.js /build-info.json /afeiii-analytics.js
   header @html Cache-Control "no-cache"
   @immutable path /_app/immutable/*
   header @immutable Cache-Control "public, max-age=31536000, immutable"

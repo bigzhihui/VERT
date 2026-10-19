@@ -82,7 +82,7 @@ export const siteContent = {
 					title: "网站访问数据",
 					paragraphs: [
 						"访问网页和下载转换引擎时，托管及网络服务需要处理 IP 地址、请求路径和浏览器信息，用于传输内容与安全防护。文件内容不会随这些静态资源请求上传。",
-						"本站没有接入账户、Plausible、Stripe 或第三方统计脚本；转换引擎资源由本站提供。主动打开源码或上游项目等外部链接后，对方网站适用自己的隐私政策。",
+						"本站公开说明页接入 Cloudflare Web Analytics，了解页面访问和加载性能，不使用统计 Cookie，不采集文件内容或文件名；不在转换、设置和诊断页直接加载统计。转换引擎资源由本站提供。主动打开外部链接后，对方适用自己的隐私政策。",
 					],
 				},
 				{
@@ -113,7 +113,7 @@ export const siteContent = {
 					title: "Website requests",
 					paragraphs: [
 						"Hosting and network services process IP addresses, requested paths and browser information to deliver pages and engine assets and provide security. File contents are not uploaded with these static requests.",
-						"This site integrates no accounts, Plausible, Stripe or third-party analytics. Engines are served from this site. External links, including upstream source links, are governed by those sites’ policies.",
+						"Public information pages use Cloudflare Web Analytics for page views and performance without analytics cookies, file contents or filenames. Analytics is not loaded directly on conversion, settings or diagnostic pages. Engines are served by this site. External links follow their own privacy policies.",
 					],
 				},
 				{
