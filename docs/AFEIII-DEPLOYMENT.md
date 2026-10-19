@@ -39,7 +39,7 @@ Oracle Phoenix 仅提供网页和引擎静态资源，转换不使用 Oracle CPU
 
 `deploy/Caddyfile` 是新站片段，不能覆盖服务器整份 Caddy 配置。发布前核对原配置 SHA256，备份、增量追加、`caddy validate`，然后热加载。后续发布先传入新版本目录，核对文件清单后原子切换 `current`；回退指向上一已验证版本。
 
-HTTP 自动转 HTTPS。CSP 限制连接到本站与本地 blob，禁止外部上传、iframe 和表单；非 GET/HEAD 请求返回 405。COOP/COEP 支持隔离上下文中的本地引擎。HTML、Service Worker 和版本信息需要重新验证，带哈希静态资源可长期缓存。
+HTTP 自动转 HTTPS。CSP 允许本站、本地 blob 和指定 Cloudflare 统计端点；不上传转换文件，禁止 iframe 和表单；非 GET/HEAD 请求返回 405。COOP/COEP 支持隔离上下文中的本地引擎。HTML、Service Worker 和版本信息需要重新验证，带哈希静态资源可长期缓存。
 
 Pandoc WASM 超过 Cloudflare Pages 的 25 MiB 单文件限制，当前采用 Caddy 静态托管。若迁移 Pages，需要另行设计大引擎资源交付，不能直接上传当前构建。
 
