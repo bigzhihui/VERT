@@ -3,7 +3,7 @@ import { readFile, mkdir, mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { unzipSync } from "fflate";
-import { Input, BufferSource, MATROSKA } from "mediabunny";
+import { Input, BufferSource, MATROSKA, ALL_FORMATS } from "mediabunny";
 import { startServer } from "./serve.mjs";
 
 const local = process.env.BASE_URL ? null : await startServer();
@@ -86,6 +86,7 @@ async function home() {
 		"文件格式转换",
 	);
 	await expect(page.locator(".file-category-card")).toHaveCount(4);
+	await expect(page.getByRole("navigation", { name: "十三月工具导航" }).locator("a")).toHaveCount(6);
 	await expect(
 		page.locator(".file-category-card").filter({ hasText: "音频" }),
 	).toContainText("就绪", { timeout: 90000 });
@@ -206,6 +207,149 @@ try {
 		expect(new TextDecoder().decode(zip["word/document.xml"])).toContain(
 			"十三月转换验证",
 		);
+		if (process.env.SMOKE_EXTENDED) {
+			async function imageCheck(data, mimeType) {
+				await page.evaluate(
+					async ({ data, mimeType }) => {
+						const bitmap = await createImageBitmap(
+							new Blob([new Uint8Array(data)], {
+								type: mimeType,
+							}),
+						);
+						if (bitmap.width !== 120 || bitmap.height !== 80)
+							throw Error("Image dimensions changed");
+						bitmap.close();
+					},
+					{ data: [...data], mimeType },
+				);
+			}
+			const jpeg = await convert(
+				{
+					name: "image.png",
+					mimeType: "image/png",
+					buffer: Buffer.from(image),
+				},
+				".jpg",
+			);
+			await imageCheck(jpeg, "image/jpeg");
+			await imageCheck(
+				await convert(
+					{ name: "image.jpg", mimeType: "image/jpeg", buffer: jpeg },
+					".png",
+				),
+				"image/png",
+			);
+			await imageCheck(
+				await convert(
+					{
+						name: "image.webp",
+						mimeType: "image/webp",
+						buffer: webp,
+					},
+					".png",
+				),
+				"image/png",
+			);
+			const svg = Buffer.from(
+				'<svg xmlns="http://www.w3.org/2000/svg" width="120" height="80"><rect width="120" height="80" fill="#F2ABEE"/></svg>',
+			);
+			await imageCheck(
+				await convert(
+					{
+						name: "image.svg",
+						mimeType: "image/svg+xml",
+						buffer: svg,
+					},
+					".png",
+				),
+				"image/png",
+			);
+			async function audioCheck(data) {
+				const media = new Input({
+					source: new BufferSource(data),
+					formats: ALL_FORMATS,
+				});
+				expect(await media.getPrimaryAudioTrack()).toBeTruthy();
+				const duration = await media.computeDuration();
+				expect(duration).toBeGreaterThan(0.8);
+				expect(duration).toBeLessThan(1.3);
+				media.dispose();
+			}
+			await audioCheck(
+				await convert(
+					{ name: "audio.mp3", mimeType: "audio/mpeg", buffer: mp3 },
+					".wav",
+				),
+			);
+			const flac = await convert(
+				{ name: "audio.wav", mimeType: "audio/wav", buffer: wave() },
+				".flac",
+			);
+			await audioCheck(flac);
+			await audioCheck(
+				await convert(
+					{
+						name: "audio.flac",
+						mimeType: "audio/flac",
+						buffer: flac,
+					},
+					".wav",
+				),
+			);
+			const markdown = Buffer.from(
+				"# 十三月转换验证\n\n中文内容和 English sample.\n",
+			);
+			const back = await convert(
+				{
+					name: "document.docx",
+					mimeType:
+						"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+					buffer: docx,
+				},
+				".md",
+			);
+			expect(back.toString("utf8")).toContain("十三月转换验证");
+			const htmlDoc = await convert(
+				{
+					name: "document.md",
+					mimeType: "text/markdown",
+					buffer: markdown,
+				},
+				".html",
+			);
+			expect(htmlDoc.toString("utf8")).toContain("十三月转换验证");
+			const htmlBack = await convert(
+				{
+					name: "document.html",
+					mimeType: "text/html",
+					buffer: htmlDoc,
+				},
+				".md",
+			);
+			expect(htmlBack.toString("utf8")).toContain("十三月转换验证");
+			const epub = await convert(
+				{
+					name: "document.md",
+					mimeType: "text/markdown",
+					buffer: markdown,
+				},
+				".epub",
+			);
+			expect(
+				Object.keys(unzipSync(epub)).some((name) =>
+					name.endsWith(".opf"),
+				),
+			).toBe(true);
+			const epubBack = await convert(
+				{
+					name: "document.epub",
+					mimeType: "application/epub+zip",
+					buffer: epub,
+				},
+				".md",
+			);
+			expect(epubBack.toString("utf8")).toContain("十三月转换验证");
+		}
 	}
 	const video = await readFile("tests/fixtures/color-1s.mp4");
 	const mkv = await convert(
@@ -225,6 +369,25 @@ try {
 	expect(await videoInput.computeDuration()).toBeGreaterThan(0.8);
 	expect(await videoInput.computeDuration()).toBeLessThan(1.2);
 	videoInput.dispose();
+	if (process.env.SMOKE_EXTENDED) {
+		for (const [name, buffer, to] of [
+			["video.mkv", mkv, ".mp4"],
+			["video.mp4", video, ".webm"],
+		]) {
+			const data = await convert(
+				{ name, mimeType: "video/" + name.split(".").at(-1), buffer },
+				to,
+			);
+			const media = new Input({
+				source: new BufferSource(data),
+				formats: ALL_FORMATS,
+			});
+			expect(await media.getPrimaryVideoTrack()).toBeTruthy();
+			expect(await media.computeDuration()).toBeGreaterThan(0.8);
+			expect(await media.computeDuration()).toBeLessThan(1.3);
+			media.dispose();
+		}
+	}
 	if (process.env.SCREENSHOT_DIR) {
 		await mkdir(process.env.SCREENSHOT_DIR, { recursive: true });
 		await page.screenshot({
@@ -283,6 +446,7 @@ try {
 	console.log("Invalid media rejected without remote fallback");
 
 	for (const path of [
+		"/formats/",
 		"/about/",
 		"/privacy/",
 		"/terms/",

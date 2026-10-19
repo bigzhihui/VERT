@@ -16,7 +16,7 @@ convert.afeiii.com {
   respond @write 405
   @private path /convert /convert/* /debug /debug/*
   header @private X-Robots-Tag "noindex, nofollow"
-  @html path / /about /about/* /privacy /privacy/* /settings /settings/* /convert /convert/* /debug /debug/* /terms /terms/* /contact /contact/* /sw.js /build-info.json
+  @html path / /about /about/* /privacy /privacy/* /formats /formats/* /settings /settings/* /convert /convert/* /debug /debug/* /terms /terms/* /contact /contact/* /sw.js /build-info.json
   header @html Cache-Control "no-cache"
   @immutable path /_app/immutable/*
   header @immutable Cache-Control "public, max-age=31536000, immutable"

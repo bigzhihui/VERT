@@ -216,6 +216,37 @@
 			<Navbar.Desktop />
 		</div>
 
+		<nav
+			aria-label="十三月工具导航"
+			class="mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-x-5 gap-y-2 px-6 pb-6 text-xs font-normal"
+		>
+			<a
+				href="https://afeiii.com/"
+				target="_blank"
+				rel="noopener noreferrer">十三月主站</a
+			><a
+				href="https://tools.afeiii.com/"
+				target="_blank"
+				rel="noopener noreferrer">开发工具</a
+			><a
+				href="https://pdf.afeiii.com/"
+				target="_blank"
+				rel="noopener noreferrer">PDF 工具</a
+			><a
+				href="https://resume.afeiii.com/"
+				target="_blank"
+				rel="noopener noreferrer">在线简历</a
+			><a
+				href="https://check.afeiii.com/"
+				target="_blank"
+				rel="noopener noreferrer">网站检测</a
+			><a
+				href="https://convert.afeiii.com/"
+				target="_blank"
+				rel="noopener noreferrer">格式转换</a
+			>
+		</nav>
+
 		<!-- 
 		SvelteKit throws the following warning when developing - safe to ignore as we render the children in this component:
 		`<slot />` or `{@render ...}` tag missing — inner content will not be rendered

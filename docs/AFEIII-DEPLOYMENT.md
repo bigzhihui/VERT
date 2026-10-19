@@ -31,6 +31,8 @@ Windows 测试默认使用本机 Google Chrome。Linux/CI 使用 Playwright Chro
 
 `build-info.json` 记录源码版本和 `browser-only` 模式。`scripts/prepare-site.mjs` 复制引擎、生成资源 SHA256 清单及版本标记，不从 CDN 动态下载运行时引擎。
 
+设置 `SMOKE_EXTENDED=1` 可执行 18 个常用格式组合的真实下载验收：图片 5 项、音频 4 项、文档 6 项、视频 3 项。2026-10-19 正式站桌面 Chrome 均通过，视频使用自制无音轨 H.264 样例；文档检查中文与结构，媒体检查尺寸、轨道和时长。默认 CI 保留基础四类转换及失败恢复检查。没有验证所有格式、大文件、Safari、Firefox 或手机视频编码。公开说明见 `/formats/`，五站互链见“十三月工具导航”。
+
 ## 静态部署
 
 Oracle Phoenix 仅提供网页和引擎静态资源，转换不使用 Oracle CPU。独立目录 `/opt/apps/vert/releases/<revision>`，`/opt/apps/vert/current` 指向当前构建。Caddy 直接提供文件，无新应用容器、数据库或公网应用端口。

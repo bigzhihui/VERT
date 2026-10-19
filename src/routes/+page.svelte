@@ -154,6 +154,12 @@
 		</div>
 	</div>
 
+	<p class="mb-6 text-center text-sm font-normal">
+		<a class="underline" href="/formats/"
+			>支持范围与 18 个实测转换组合 / Formats and limitations</a
+		>
+	</p>
+
 	<hr />
 
 	<div class="mt-10 md:mt-16">
