@@ -1,0 +1,17 @@
+十三月格式转换 is a modified deployment of VERT.
+VERT source and contributors: https://github.com/VERT-sh/VERT
+Site source: https://github.com/bigzhihui/VERT
+VERT is licensed under AGPL-3.0; see /LICENSE and the site source.
+
+Conversion software includes ImageMagick/magick-wasm, Pandoc/pandoc-wasm,
+FFmpeg/ffmpeg.wasm, Mediabunny and its codec packages, and browser_wasi_shim.
+Original copyright and license notices are retained in the repository,
+bundled libraries and the corresponding upstream projects.
+
+The self-hosted @ffmpeg/core 0.12.10 is licensed GPL-2.0-or-later.
+Wrapper source: https://github.com/ffmpegwasm/ffmpeg.wasm/tree/main/packages/core
+Core build source: https://github.com/ffmpegwasm/ffmpeg.wasm/tree/main/ffmpeg
+FFmpeg source: https://github.com/FFmpeg/FFmpeg
+FFmpeg WASM core licensing: https://ffmpegwasm.netlify.app/docs/overview/
+
+GPL-2.0 text: /licenses/FFmpeg-GPL-2.0.txt

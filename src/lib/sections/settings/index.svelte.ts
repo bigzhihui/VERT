@@ -33,7 +33,7 @@ export class Settings {
 	public static instance = new Settings();
 
 	public settings: ISettings = $state({
-		filenameFormat: "VERT_%name%",
+		filenameFormat: "%name%_converted",
 		defaultFormat: {
 			image: ".png",
 			video: ".mp4",
@@ -42,7 +42,7 @@ export class Settings {
 		},
 		useDefaultFormat: false,
 		metadata: true,
-		plausible: true,
+		plausible: false,
 		vertdURL: PUB_VERTD_URL,
 		vertdSpeed: "slow",
 		vertdBlockedHashes: new Map<string, Date[]>(),

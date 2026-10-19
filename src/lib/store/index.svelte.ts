@@ -573,29 +573,11 @@ export const isMobile = writable(false);
 export const effects = writable(true);
 export const theme = writable<"light" | "dark">("light");
 export const locale = writable(getLocale());
-export const availableLocales = {
-	en: "English",
-	es: "Español",
-	fr: "Français",
-	de: "Deutsch",
-	it: "Italiano",
-	ba: "Bosanski",
-	hr: "Hrvatski",
-	id: "Bahasa Indonesia",
-	tr: "Türkçe",
-	ja: "日本語",
-	ko: "한국어",
-	pl: "Polski",
-	cs: "Čeština",
-	no: "Norsk",
-	el: "Ελληνικά",
-	"zh-Hans": "简体中文",
-	"zh-Hant": "繁體中文",
-	"pt-BR": "Português (Brasil)",
-};
+export const availableLocales = { "zh-Hans": "简体中文", en: "English" };
 
 export function updateLocale(newLocale: string) {
-	if (!Object.keys(availableLocales).includes(newLocale)) newLocale = "en";
+	if (!Object.keys(availableLocales).includes(newLocale))
+		newLocale = "zh-Hans";
 
 	log(["locale"], `set to ${newLocale}`);
 	localStorage.setItem("locale", newLocale);

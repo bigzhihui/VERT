@@ -3,7 +3,7 @@ import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig, type PluginOption } from "vite";
 import svg from "@poppanator/sveltekit-svg";
 import wasm from "vite-plugin-wasm";
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 
 // coollify removes the .git folder but exposes commit via SOURCE_COMMIT env variable
 let commitHash = process.env.SOURCE_COMMIT
@@ -12,7 +12,18 @@ let commitHash = process.env.SOURCE_COMMIT
 
 if (commitHash === "unknown") {
 	try {
-		commitHash = execSync("git rev-parse --short HEAD").toString().trim();
+		commitHash = execFileSync("git", [
+			"-c",
+			`safe.directory=${process
+				.cwd()
+				.replaceAll("\\", "/")
+				.replace(/^[a-z]:/, (drive) => drive.toUpperCase())}`,
+			"rev-parse",
+			"--short",
+			"HEAD",
+		])
+			.toString()
+			.trim();
 	} catch (e) {
 		console.warn(`Could not determine Git commit hash: ${e}`);
 		commitHash = "unknown";
@@ -25,7 +36,7 @@ export default defineConfig(({ command }) => {
 		paraglideVitePlugin({
 			project: "./project.inlang",
 			outdir: "./src/lib/paraglide",
-			strategy: ["localStorage", "preferredLanguage", "baseLocale"],
+			strategy: ["localStorage", "baseLocale"],
 		}),
 		svg({
 			includePaths: ["./src/lib/assets"],

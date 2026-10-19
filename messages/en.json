@@ -1,33 +1,33 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"navbar": {
-		"upload": "Upload",
+		"upload": "Choose files",
 		"convert": "Convert",
 		"settings": "Settings",
 		"about": "About",
 		"toggle_theme": "Toggle theme"
 	},
 	"footer": {
-		"copyright": "© {year} VERT.",
-		"source_code": "Source code",
+		"copyright": "© {year} Thirteen Month · Built with VERT",
+		"source_code": "Site source",
 		"discord_server": "Discord server",
 		"privacy_policy": "Privacy policy"
 	},
 	"upload": {
-		"title": "The file converter you'll love.",
-		"subtitle": "All file processing is done on your device. No file size limit, no ads, and completely open source.",
+		"title": "Convert files on your device.",
+		"subtitle": "Convert images, audio, documents and supported videos without an account. Files stay in your browser. Engines download on first use; formats, speed and file size depend on your device and browser.",
 		"uploader": {
 			"text": "Drop or click to {action}",
 			"convert": "convert"
 		},
 		"cards": {
-			"title": "VERT supports...",
+			"title": "Explore supported formats",
 			"images": "Images",
 			"audio": "Audio",
 			"documents": "Documents",
 			"video": "Video",
-			"video_server_processing": "Local & server supported",
-			"local_supported": "Local supported",
+			"video_server_processing": "Local browser conversion",
+			"local_supported": "Processed in your browser",
 			"status": {
 				"text": "<b>Status:</b> {status}",
 				"ready": "ready",
@@ -44,7 +44,7 @@
 			"partial_support": "This format can only be converted as {direction}.",
 			"direction_input": "input (from)",
 			"direction_output": "output (to)",
-			"video_server_processing": "When possible, VERT converts videos locally in your browser. Some conversions may require server-side processing, learn how to set it up locally here."
+			"video_server_processing": "This site only uses local browser video conversion, with no server fallback. Some codecs, formats or large files may not work."
 		}
 	},
 	"convert": {
@@ -78,7 +78,7 @@
 			"device_body": "Your device may be slow at converting '{filename}' locally. You can continue to try local conversion, but you might have better luck switching to on-server conversion.",
 			"timeout_body": "Converting '{filename}' is taking longer than expected. You can continue waiting, or try on-server conversion instead.",
 			"continue": "Continue locally",
-			"switch": "Continue on server"
+			"switch": "Server conversion unavailable"
 		},
 		"panel": {
 			"convert_all": "Convert all",
@@ -100,7 +100,9 @@
 			"disabled": {
 				"no_converter": "No compatible converter is available for {from} to {to}.",
 				"vertd_size_limit": "This file cannot be converted to this format as the file's size is too large for the selected vertd server."
-			}
+			},
+			"target": "Output format",
+			"result_count": "{count} results"
 		},
 		"settings": {
 			"settings": "Settings",
@@ -251,7 +253,8 @@
 					"to": "<b>To format:</b> {to}",
 					"error_message": "<b>Error message:</b> [view_link]View error logs[/view_link]"
 				}
-			}
+			},
+			"no_media_tracks": "No usable audio or video tracks were found. Check that the file is complete."
 		}
 	},
 	"settings": {
@@ -520,7 +523,7 @@
 		"title": "Privacy Policy",
 		"summary": {
 			"title": "Summary",
-			"description": "VERT's privacy policy is very simple: we do not collect or store any data on you at all. We don't use cookies or trackers, analytics are completely private, and all conversions (except videos, if required) happen locally on your browser. Videos converted on our servers are deleted after being downloaded, or an hour, unless explicitly given permission by you to be stored; it will only be used for the purpose of troubleshooting. VERT self-hosts a Coolify instance for hosting the website and vertd (for server video conversion) which auto-deploys from the main branches of our GitHub repositories, and a Plausible instance for completely anonymous and aggregated analytics. We use Stripe to process donations, which may collect some data used for fraud prevention.<br/><br/>Note this may only apply to the official VERT instance at [vert_link]vert.sh[/vert_link]; third-party instances may handle your data differently."
+			"description": "Files are processed in your browser. This site has no file upload or account service."
 		},
 		"conversions": {
 			"title": "Conversions",

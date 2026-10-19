@@ -1,0 +1,31 @@
+name: Afeiii verification
+on:
+  push:
+    branches: [brand/thirteen-month]
+  pull_request:
+    branches: [brand/thirteen-month]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: cp .env.example .env
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+      - run: bun run check
+      - run: bun run lint
+      - run: bunx playwright install --with-deps chromium
+      - run: bun run test:smoke

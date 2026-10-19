@@ -373,6 +373,14 @@ export class MediabunnyConverter extends Converter {
 				formats: [MP4, QTFF, MATROSKA, WEBM, MPEG_TS],
 				source: new BlobSource(file.file),
 			});
+			const tracks = await input.getTracks();
+			if (
+				!tracks.some(
+					(track) => track.type === "video" || track.type === "audio",
+				)
+			) {
+				throw new Error(m["convert.errors.no_media_tracks"]());
+			}
 			streamTargetContext =
 				await this.createStreamingTarget(outputFilename);
 			if (streamTargetContext) {

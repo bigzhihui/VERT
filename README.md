@@ -1,50 +1,42 @@
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/bf441748-0ec5-4c8a-b3e5-11301ee3f0bd" alt="VERT's logo" height="100">
-</p>
-<h1 align="center"><a href="https://vert.sh">VERT.sh</a></h1>
+# 十三月格式转换
 
-VERT is a file conversion utility that uses WebAssembly to convert files on your device instead of a cloud. Check out the live instance at [vert.sh](https://vert.sh).
+[使用网站](https://convert.afeiii.com) · [隐私说明](https://convert.afeiii.com/privacy/) · [部署维护](docs/AFEIII-DEPLOYMENT.md)
 
-VERT is built in Svelte and TypeScript.
+基于 [VERT](https://github.com/VERT-sh/VERT) 定制的公开文件转换工具。无需注册，图片、音频、文档及支持的视频在浏览器本地处理。本站没有文件上传或转换后端。
 
-## Screenshots
+![十三月格式转换](static/social.png)
 
-|                     Upload page                      |                     Conversion page                      |
-| :--------------------------------------------------: | :------------------------------------------------------: |
-| ![VERT upload page](docs/images/screenshot-home.png) | ![VERT convert page](docs/images/screenshot-convert.png) |
+## 本站改动
 
-## Features
+- 新会话默认简体中文，保留英语切换，补齐转换设置、诊断与错误提示中的中文。
+- 固定关闭远程视频转换、远程回退、第三方统计、支付和自动反馈上传。
+- 自托管 FFmpeg、ImageMagick、Pandoc 等引擎资源，避免运行时依赖外部 CDN。
+- 本站品牌、页面元数据、分享图、关于、隐私、条款、联系与安全联系文件。
+- Caddy 静态部署、同源连接策略、独立版本目录和构建版本标记。
+- 实际浏览器转换、下载、手机布局及网络请求验证，GitHub 验证工作流不自动部署。
 
-- Convert files directly on your device using WebAssembly\*
-- No file or file size limits
-- Convert images, audio, documents, and video\*
-- Supports over **250+** file formats
-- Conversion settings
-- User-friendly interface built with Svelte
+## 支持边界
 
-<sup>\* Local video conversion in-browser is supported, but some conversion may require server-side processing. Server video conversion is available with our official instance, but the [daemon](https://github.com/VERT-sh/vertd) is easily self-hostable to maintain privacy and fully local functionality.</sup>
+格式列表来自引擎能力声明，不保证所有文件均成功。视频受浏览器编码、设备、分辨率和内存影响；本站不提供服务器回退。旧版 DOC、PDF 与 Office 格式之间的任意互转不在承诺范围。重要文件请保留原件并检查转换结果。
 
-## Documentation
+首次使用会下载转换引擎。引擎可在浏览器缓存；大文件可能超出设备内存。无需账号，文件不上传；访问网页和引擎资源仍需要正常的网络请求。
 
-- [FAQ](./docs/FAQ.md)
-- [Getting Started](./docs/GETTING_STARTED.md)
-- [Using Docker](./docs/DOCKER.md)
-- [Video Conversion](./docs/VIDEO_CONVERSION.md)
+## 开发与验证
 
-## Contributing
+```sh
+cp .env.example .env
+bun install --frozen-lockfile
+bun run build
+bun run check
+bun run lint
+bunx playwright install --with-deps chromium
+bun run test:smoke
+```
 
-Refer to our contributing guidelines before opening an issue or pull request here: [CONTRIBUTING.md](./CONTRIBUTING.md)
+使用 Bun 1.4.2、Node 24。详细部署步骤与验收范围见 [维护说明](docs/AFEIII-DEPLOYMENT.md)。生产分支为 `brand/thirteen-month`；升级和发布手动执行。
 
-## License
+## 反馈与致谢
 
-This project is licensed under the AGPL-3.0 License, please see the [LICENSE](LICENSE) file for details.
+联系：support@afeiii.com。报告问题时请说明输入/输出格式、浏览器、设备与操作步骤，不要发送敏感文件。
 
-## Star History
-
-<a href="https://star-history.dera.page/#VERT-sh/VERT&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://star-history.dera.page/svg?repos=VERT-sh/VERT&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://star-history.dera.page/svg?repos=VERT-sh/VERT&type=Date" />
-   <img alt="Star History Chart" src="https://star-history.dera.page/svg?repos=VERT-sh/VERT&type=Date" />
- </picture>
-</a>
+感谢 VERT 及其贡献者，以及 ImageMagick、Pandoc、FFmpeg、Mediabunny 等开源项目。保留原项目版权与 [AGPL-3.0 许可证](LICENSE)，本站修改源码公开提供。第三方说明见 [THIRD-PARTY-NOTICES](static/THIRD-PARTY-NOTICES.txt)。

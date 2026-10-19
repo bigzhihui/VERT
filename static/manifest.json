@@ -1,33 +1,19 @@
 {
-	"name": "VERT",
-	"short_name": "VERT",
-	"description": "The file converter you'll love",
+	"name": "十三月格式转换",
+	"short_name": "十三月转换",
+	"description": "浏览器本地文件格式转换",
+	"lang": "zh-Hans",
 	"start_url": "/",
+	"scope": "/",
 	"display": "standalone",
-	"background_color": "#ffffff",
 	"theme_color": "#F2ABEE",
+	"background_color": "#f6f5f8",
 	"icons": [
 		{
-			"src": "lettermark.jpg",
-			"sizes": "192x192",
-			"type": "image/jpeg"
-		},
-		{
-			"src": "lettermark.jpg",
-			"sizes": "512x512",
-			"type": "image/jpeg"
-		},
-		{
-			"src": "lettermark_maskable.png",
-			"sizes": "192x192",
-			"type": "image/png",
-			"purpose": "maskable"
-		},
-		{
-			"src": "lettermark_maskable.png",
-			"sizes": "512x512",
-			"type": "image/png",
-			"purpose": "maskable"
+			"src": "/favicon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml",
+			"purpose": "any"
 		}
 	]
 }

@@ -1,3 +1,4 @@
+import { DISABLE_ALL_EXTERNAL_REQUESTS } from "$lib/util/consts";
 import { Settings } from "./index.svelte";
 import { PUB_VERTD_URL } from "$env/static/public";
 import { error, log } from "$lib/util/logger.svelte";
@@ -162,6 +163,10 @@ export class VertdInstance {
 
 export function useVertdSizeLimit() {
 	$effect(() => {
+		if (DISABLE_ALL_EXTERNAL_REQUESTS) {
+			vertdSizeLimit.set(Number.POSITIVE_INFINITY);
+			return;
+		}
 		let cancelled = false;
 
 		const loadLimit = async () => {

@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://vert.sh/sitemap.xml
+Disallow: /convert/
+Disallow: /debug/
+Sitemap: https://convert.afeiii.com/sitemap.xml

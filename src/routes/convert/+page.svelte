@@ -452,6 +452,9 @@
 													? 'bg-accent-green'
 													: 'bg-accent-blue'}"
 										disabled={!files.isReady(file)}
+										aria-label={m[
+											"convert.tooltips.convert_file"
+										]()}
 										onclick={() => file.convert()}
 									>
 										<RotateCwIcon size="24" />
@@ -465,6 +468,9 @@
 										class="btn {$effects
 											? ''
 											: '!scale-100'} p-0 w-14 h-14"
+										aria-label={m[
+											"convert.tooltips.download_file"
+										]()}
 										onclick={file.download}
 										disabled={!file.result}
 									>

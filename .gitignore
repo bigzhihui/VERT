@@ -22,3 +22,10 @@ vite.config.ts.timestamp-*
 
 # IDE
 .idea
+
+# Generated self-hosted engine assets
+/static/engines/
+/static/build-info.json
+/static/LICENSE
+/playwright-report/
+/test-results/

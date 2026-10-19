@@ -1,9 +1,13 @@
 <script lang="ts">
 	import { onMount } from "svelte";
+	import { page } from "$app/state";
 	import { goto, beforeNavigate, afterNavigate } from "$app/navigation";
 
-	import { PUB_PLAUSIBLE_URL, PUB_HOSTNAME } from "$env/static/public";
-	import { DISABLE_ALL_EXTERNAL_REQUESTS, VERT_NAME } from "$lib/util/consts";
+	import {
+		DISABLE_ALL_EXTERNAL_REQUESTS,
+		VERT_NAME,
+		SITE_URL,
+	} from "$lib/util/consts";
 	import * as Layout from "$lib/components/layout";
 	import * as Navbar from "$lib/components/layout/Navbar";
 	import { Settings } from "$lib/sections/settings/index.svelte";
@@ -18,7 +22,6 @@
 		updateLocale,
 	} from "$lib/store/index.svelte";
 	import "$lib/css/app.scss";
-	import { browser } from "$app/environment";
 	import { initStores } from "$lib/util/animation";
 	import { useVertdSizeLimit } from "$lib/sections/settings/vertdSettings.svelte";
 	import { converters } from "$lib/converters";
@@ -31,7 +34,7 @@
 	} from "$lib/util/logger.svelte";
 
 	let { children } = $props();
-	let enablePlausible = $state(false);
+
 	let isAprilFools = $state(false);
 
 	let scrollPositions = new Map<string, number>();
@@ -157,17 +160,6 @@
 		};
 	});
 
-	$effect(() => {
-		enablePlausible =
-			!!PUB_PLAUSIBLE_URL &&
-			Settings.instance.settings.plausible &&
-			!DISABLE_ALL_EXTERNAL_REQUESTS;
-		if (!enablePlausible && browser) {
-			// reset pushState on opt-out so that plausible stops firing events on page navigation
-			history.pushState = History.prototype.pushState;
-		}
-	});
-
 	onMount(() => {
 		// query vertd server for size limit on mount and on settings change
 		useVertdSizeLimit();
@@ -175,51 +167,29 @@
 </script>
 
 <svelte:head>
-	<title>{VERT_NAME}</title>
+	<title>{VERT_NAME} · 图片、音频、文档与视频格式转换</title>
 	<meta name="theme-color" content="#F2ABEE" />
 	<meta
-		name="title"
-		content="{VERT_NAME} — Free, fast, and awesome file converter"
-	/>
-	<meta
 		name="description"
-		content="With VERT, you can quickly convert any image, video, audio, and document file. No ads, no tracking, open source, and all processing is done on your device."
+		content="免注册的浏览器本地格式转换工具。图片、音频、文档及支持的视频在你的设备上处理，不上传文件。实际支持范围受格式、浏览器与设备能力限制。"
 	/>
-	<meta property="og:url" content="https://vert.sh" />
 	<meta property="og:type" content="website" />
-	<meta
-		property="og:title"
-		content="{VERT_NAME} — Free, fast, and awesome file converter"
-	/>
+	<meta property="og:title" content={VERT_NAME} />
 	<meta
 		property="og:description"
-		content="With VERT, you can quickly convert any image, video, audio, and document file. No ads, no tracking, open source, and all processing is done on your device."
+		content="文件在你的浏览器中转换，免注册、不上传文件。"
 	/>
-	<meta property="og:image" content="https://vert.sh/VERT_Feature.webp" />
+	<meta property="og:url" content={SITE_URL + page.url.pathname} />
+	<meta property="og:image" content={SITE_URL + "/social.png"} />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta property="twitter:domain" content="vert.sh" />
-	<meta property="twitter:url" content="https://vert.sh" />
+	<meta name="twitter:title" content={VERT_NAME} />
 	<meta
-		property="twitter:title"
-		content="{VERT_NAME} — Free, fast, and awesome file converter"
+		name="twitter:description"
+		content="图片、音频、文档及支持的视频，在浏览器中完成转换。"
 	/>
-	<meta
-		property="twitter:description"
-		content="With VERT, you can quickly convert any image, video, audio, and document file. No ads, no tracking, open source, and all processing is done on your device."
-	/>
-	<meta
-		property="twitter:image"
-		content="https://vert.sh/VERT_Feature.webp"
-	/>
+	<meta name="twitter:image" content={SITE_URL + "/social.png"} />
 	<link rel="manifest" href="/manifest.json" />
-	<link rel="canonical" href="https://vert.sh/" />
-	{#if enablePlausible}
-		<script
-			defer
-			data-domain={PUB_HOSTNAME || "vert.sh"}
-			src="{PUB_PLAUSIBLE_URL}/js/script.js"
-		></script>
-	{/if}
+	<link rel="canonical" href={SITE_URL + page.url.pathname} />
 	{#if isAprilFools}
 		<style>
 			* {

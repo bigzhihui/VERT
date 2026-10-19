@@ -481,6 +481,8 @@
 	<button
 		class="relative flex items-center justify-center w-full font-display px-3 py-3.5 bg-button rounded-full overflow-hidden cursor-pointer focus:!outline-none
 		{disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}"
+		aria-label={m["convert.dropdown.target"]()}
+		aria-expanded={open}
 		onclick={() => clickDropdown()}
 		{disabled}
 	>
@@ -572,10 +574,9 @@
 							class="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-muted"
 							style="font-size: 0.7rem;"
 						>
-							{filteredData.formats.length}
-							{filteredData.formats.length === 1
-								? "result"
-								: "results"}
+							{m["convert.dropdown.result_count"]({
+								count: filteredData.formats.length,
+							})}
 						</span>
 					{/if}
 				</div>

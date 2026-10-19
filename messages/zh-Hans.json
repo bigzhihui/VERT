@@ -1,33 +1,33 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"navbar": {
-		"upload": "上传",
+		"upload": "选择文件",
 		"convert": "转换",
 		"settings": "设置",
 		"about": "关于",
 		"toggle_theme": "切换主题"
 	},
 	"footer": {
-		"copyright": "© {year} VERT.",
-		"source_code": "源代码",
+		"copyright": "© {year} 十三月 · 基于 VERT",
+		"source_code": "本站源码",
 		"discord_server": "Discord 服务器",
 		"privacy_policy": "隐私政策"
 	},
 	"upload": {
-		"title": "你一定会喜欢的文件转换工具。",
-		"subtitle": "所有图片、音频和文档处理都在你的设备上进行。视频通过超快速服务器转换。无文件大小限制，无广告，完全开源。",
+		"title": "文件格式转换，在你的设备上完成。",
+		"subtitle": "免注册转换图片、音频、文档和部分视频。文件在浏览器中处理，不上传到服务器。首次使用会下载转换引擎；可用格式、速度和大小受浏览器与设备能力限制。",
 		"uploader": {
 			"text": "拖放或点击以{action}",
 			"convert": "转换"
 		},
 		"cards": {
-			"title": "VERT 支持...",
+			"title": "选择你需要的格式",
 			"images": "图片",
 			"audio": "音频",
 			"documents": "文档",
 			"video": "视频",
-			"video_server_processing": "服务器支持",
-			"local_supported": "本地支持",
+			"video_server_processing": "浏览器本地转换",
+			"local_supported": "浏览器本地处理",
 			"status": {
 				"text": "<b>状态：</b>{status}",
 				"ready": "就绪",
@@ -35,7 +35,8 @@
 				"not_initialized": "未初始化",
 				"downloading": "下载中...",
 				"initializing": "初始化中...",
-				"unknown": "未知状态"
+				"unknown": "未知状态",
+				"partially_ready": "部分就绪"
 			},
 			"supported_formats": "支持的格式："
 		},
@@ -43,35 +44,53 @@
 			"partial_support": "此格式仅可作为{direction}进行转换。",
 			"direction_input": "输入（来源）",
 			"direction_output": "输出（目标）",
-			"video_server_processing": "视频默认上传到服务器进行处理，点击这里了解如何在本地设置。"
+			"video_server_processing": "本站仅使用浏览器本地视频引擎，不提供服务器转换或远程回退。部分格式、编码和大文件可能无法处理。"
 		}
 	},
 	"convert": {
 		"archive_file": {
 			"extracting": "检测到 ZIP 压缩包：{filename}",
 			"extracted": "从 {filename} 中提取了 {extract_count} 个文件。{ignore_count} 个项目被忽略。",
-			"extract_error": "提取 {filename} 时出错：{error}"
+			"extract_error": "提取 {filename} 时出错：{error}",
+			"extract": "解压压缩包",
+			"detected": "在“{filename}”中检测到{type}文件。",
+			"audio": "音频",
+			"video": "视频",
+			"doc": "文档",
+			"image": "图片",
+			"conversion_failed": "“{filename}”中的 {count} 个文件转换失败，请查看压缩包中的“{reportName}”。"
 		},
-		"large_file_warning": "由于浏览器/设备限制，此文件大于 {limit}GB，视频转音频功能已禁用。我们建议使用 Firefox 或 Safari 处理此大小的文件，因为它们的限制较少。",
+		"large_file_warning": "“{filename}”超过 {limit} GB，受浏览器与设备限制，已禁用视频转音频。可以尝试较小的文件。",
 		"external_warning": {
 			"title": "外部服务器警告",
-			"text": "如果你选择转换为视频格式，这些文件将被上传到外部服务器进行转换。是否继续？",
+			"text": "“{filename}”的当前设置需要服务器转换，本站未开放此功能。",
 			"yes": "是",
-			"no": "否"
+			"no": "否",
+			"dont_show_again": "不再显示"
 		},
 		"panel": {
 			"convert_all": "全部转换",
 			"download_all": "下载全部为 .zip",
 			"remove_all": "删除所有文件",
 			"set_all_to": "全部设置为",
-			"na": "不适用"
+			"na": "不适用",
+			"download_all_toast": "正在打包 {count} 个文件（{size} MB），大文件可能需要一些时间。"
 		},
 		"dropdown": {
 			"audio": "音频",
 			"video": "视频",
 			"doc": "文档",
 			"image": "图片",
-			"placeholder": "搜索格式"
+			"placeholder": "搜索格式",
+			"no_formats": "暂无可用格式",
+			"no_results": "没有匹配的格式",
+			"fallback": "加载可用格式时出错，已显示所有格式。",
+			"disabled": {
+				"no_converter": "当前浏览器无法将 {from} 转为 {to}。",
+				"vertd_size_limit": "文件超出服务器限制；本站仅提供浏览器本地转换。"
+			},
+			"target": "目标格式",
+			"result_count": "{count} 项结果"
 		},
 		"tooltips": {
 			"unknown_file": "未知文件类型",
@@ -112,7 +131,129 @@
 					"no": "不提交"
 				},
 				"failed_to_keep": "无法在服务器上保留视频：{error}",
-				"not_found": "未找到 vertd 实例来开始视频转换。请确保实例 URL 设置正确。"
+				"not_found": "未找到 vertd 实例来开始视频转换。请确保实例 URL 设置正确。",
+				"ratelimit": "“{filename}”多次转换失败，请稍后再试。",
+				"file_too_large": "“{filename}”大小为 <b>{fileSize}</b>，超出 <b>{limit}</b> 限制，请尝试较小的文件。",
+				"retry": "正在使用其他设置重试“{filename}”，可能需要更长时间。"
+			},
+			"converter_fallback": {
+				"title": "更换转换引擎？",
+				"body": "“{filename}”转换失败，是否尝试兼容引擎“{converter}”？",
+				"yes": "尝试其他引擎",
+				"no": "取消转换",
+				"all_failed": "“{filename}”的可用转换引擎均未成功，已取消转换。"
+			},
+			"video": "视频",
+			"no_media_tracks": "文件中没有可处理的音视频轨道，请检查文件是否完整。"
+		},
+		"image_sequence": {
+			"image_sequence": "图片序列",
+			"fps": "帧率",
+			"transparency": "透明度"
+		},
+		"slow_conversion": {
+			"title": "转换可能需要一些时间",
+			"device_body": "你的设备转换“{filename}”可能较慢，请耐心等待，或取消后尝试较小的文件。",
+			"timeout_body": "“{filename}”转换时间较长，可以继续等待，或取消后尝试较小的文件。",
+			"continue": "继续本地转换",
+			"switch": "服务器转换未开放"
+		},
+		"settings": {
+			"settings": "设置",
+			"title": "文件转换设置",
+			"badge": {
+				"text": "测试版"
+			},
+			"description": "正在编辑转换设置：",
+			"all_files": "全部文件",
+			"cancel": "取消",
+			"apply": "应用",
+			"none": "此格式暂无可调设置。",
+			"tabs": {
+				"converter": "转换引擎",
+				"general": "通用",
+				"video": "视频",
+				"audio": "音频",
+				"image": "图片"
+			},
+			"image": {
+				"resolution": {
+					"label": "分辨率",
+					"placeholder": "例如 1920x1080、1280x720"
+				},
+				"quality": {
+					"label": "质量（%）",
+					"placeholder": "例如 75、90、100"
+				},
+				"depth": {
+					"label": "色深（位）",
+					"placeholder": "例如 8、16、32"
+				},
+				"color_space": "色彩空间",
+				"transparency": "透明度",
+				"single_size": "单一尺寸图标"
+			},
+			"audio": {
+				"bitrate": {
+					"label": "码率（kbps）",
+					"placeholder": "例如 128、192、320"
+				},
+				"sample_rate": {
+					"label": "采样率（Hz）",
+					"placeholder": "例如 44100、48000"
+				},
+				"channels": {
+					"label": "声道数",
+					"placeholder": "例如 1（单声道）、2（立体声）"
+				}
+			},
+			"video": {
+				"quality": "质量",
+				"metadata": "元数据",
+				"speed": {
+					"title": "转换速度",
+					"description": "手动设置码率或分辨率后，将优先使用手动设置。",
+					"very_slow": "最高质量（最慢）",
+					"slower": "较高质量（较慢）",
+					"slow": "高质量（慢）",
+					"medium": "中等质量（适中）",
+					"fast": "较低质量（较快）",
+					"ultra_fast": "最低质量（最快）"
+				},
+				"fps": {
+					"label": "帧率（FPS）",
+					"placeholder": "例如 24、30、60"
+				},
+				"resolution": {
+					"label": "分辨率",
+					"placeholder": "例如 1920x1080、1280x720"
+				},
+				"bitrate": {
+					"video": "视频码率（kbps）",
+					"audio": "音频码率（kbps）",
+					"video_placeholder": "例如 1000、2000、4000",
+					"audio_placeholder": "例如 128、192、320"
+				},
+				"sample_rate": {
+					"label": "音频采样率（Hz）",
+					"placeholder": "例如 44100、48000"
+				},
+				"codec": {
+					"video": "视频编码",
+					"audio": "音频编码"
+				},
+				"audioChannels": {
+					"label": "声道数",
+					"placeholder": "例如 1（单声道）、2（立体声）"
+				}
+			},
+			"document": {
+				"something": "选项"
+			},
+			"common": {
+				"metadata": "元数据",
+				"auto": "自动",
+				"custom": "自定义"
 			}
 		}
 	},
@@ -149,7 +290,9 @@
 				"document": "文档",
 				"label": "默认转换格式",
 				"description": "这将更改上传此文件类型时自动选择的默认格式。",
-				"video": "视频"
+				"video": "视频",
+				"enable": "启用",
+				"disable": "停用"
 			},
 			"metadata": {
 				"label": "文件元数据",
@@ -173,11 +316,12 @@
 			"title": "视频转换",
 			"status": "状态：",
 			"loading": "加载中...",
-			"available": "可用（提交 ID {commitId}）",
+			"available": "可用",
 			"unavailable": "不可用（URL 正确吗？）",
 			"description": {
 				"main": "<code>vertd</code>项目是 FFmpeg 的服务器包装器。这允许你通过 VERT 网页界面方便地转换视频，同时仍能利用 GPU 的强大性能以尽可能快的速度完成转换。",
-				"info": "我们为你提供了一个公共实例以方便使用，但如果你知道如何操作，在自己的电脑或服务器上托管也很容易。你可以在[vertd_link]这里[/vertd_link]下载服务器二进制文件 - 设置过程将来会变得更简单，敬请期待！"
+				"info": "我们为你提供了一个公共实例以方便使用，但如果你知道如何操作，在自己的电脑或服务器上托管也很容易。你可以在[vertd_link]这里[/vertd_link]下载服务器二进制文件 - 设置过程将来会变得更简单，敬请期待！",
+				"more": "[vertd_link]了解更多[/vertd_link]"
 			},
 			"instance": {
 				"custom": "自定义",
@@ -198,6 +342,12 @@
 				},
 				"label": "转换速度",
 				"description": "这描述了速度和质量之间的权衡。速度越快质量越低，但完成工作的速度更快。"
+			},
+			"info": "大小限制：{sizeLimit}，版本：{commitId}",
+			"custom_headers": {
+				"label": "自定义请求头",
+				"description": "向服务器请求添加请求头，每行一项。",
+				"placeholder": "请求头名称: 请求头值"
 			}
 		},
 		"privacy": {
@@ -229,6 +379,66 @@
 				"clear_all_data_cancel": "取消",
 				"all_data_cleared": "所有网站数据已清除！正在重新加载页面...",
 				"all_data_clear_error": "清除所有网站数据失败。"
+			},
+			"debug_link": "诊断工具"
+		},
+		"debug": {
+			"title": "诊断",
+			"logs": {
+				"title": "日志",
+				"search_placeholder": "搜索日志…",
+				"count": "{count} 条记录",
+				"empty": "暂无日志",
+				"refresh": "刷新",
+				"clear": "清除",
+				"cleared": "日志已清除",
+				"levels": {
+					"all": "全部级别",
+					"log": "普通日志",
+					"error": "错误"
+				}
+			},
+			"system": {
+				"title": "系统信息",
+				"cores": "CPU 核心数",
+				"memory": "设备内存",
+				"platform": "平台",
+				"screen": "屏幕",
+				"environment": "环境",
+				"external_requests": "外部请求",
+				"enabled": "已启用",
+				"disabled": "已停用"
+			},
+			"converters": {
+				"title": "转换引擎",
+				"formats": "格式",
+				"statuses": {
+					"not_ready": "未就绪",
+					"downloading": "下载中",
+					"ready": "就绪",
+					"partially_ready": "部分就绪",
+					"error": "错误"
+				}
+			},
+			"storage": {
+				"registration": "资源缓存服务",
+				"registered": "已注册",
+				"controller": "缓存控制器",
+				"controlled": "运行中",
+				"cache_size": "缓存大小",
+				"cache_files": "缓存文件数",
+				"quota_used": "已用存储",
+				"quota_available": "可用空间"
+			},
+			"tools": {
+				"title": "诊断工具",
+				"report_title": "问题报告",
+				"report_description": "在本机生成系统信息和日志报告，可能包含文件名、格式和转换详情。分享前请检查并移除敏感信息。",
+				"copy_report": "复制报告",
+				"download_report": "下载报告",
+				"report_copied": "报告已复制到剪贴板",
+				"report_copy_error": "复制报告失败",
+				"report_downloaded": "报告已下载"
 			}
 		}
 	},
@@ -260,7 +470,9 @@
 			"thank_you": "感谢你的捐赠！",
 			"payment_failed": "支付失败：{message}{period}你未被收费。",
 			"donation_error": "处理捐赠时出错。请稍后重试。",
-			"payment_error": "获取支付详情时出错。请稍后重试。"
+			"payment_error": "获取支付详情时出错。请稍后重试。",
+			"donation_notice_official": "捐赠将用于支持上游 VERT 项目。",
+			"donation_notice_unofficial": "如需支持上游 VERT 项目，请访问 [official_link]vert.sh[/official_link]。"
 		},
 		"credits": {
 			"title": "致谢",
@@ -277,7 +489,13 @@
 				"developer": "开发者；UI 实现",
 				"designer": "设计师；用户体验、品牌、营销",
 				"docker_ci": "维护 Docker 和 CI 支持",
-				"former_cofounder": "前联合创始人和设计师"
+				"former_cofounder": "前联合创始人和设计师",
+				"maddie": "开发；基础设施、转换后端与界面",
+				"maya": "开发；转换后端与界面",
+				"eva": "开发；基础设施",
+				"liam": "设计；交互与品牌",
+				"azure": "维护 Docker 与 CI 支持",
+				"realmy": "前共同创始人与设计师"
 			}
 		},
 		"errors": {
@@ -293,14 +511,24 @@
 			"pandoc": "加载 Pandoc worker 时出错，文档转换可能无法正常工作。",
 			"no_audio": "未找到音频流。",
 			"invalid_rate": "指定的采样率无效：{rate}Hz",
-			"file_too_large": "此文件超过 {limit}GB 浏览器/设备限制。请尝试使用 Firefox 或 Safari 转换此大文件，它们通常具有更高的限制。"
+			"file_too_large": "此文件超过 {limit}GB 浏览器/设备限制。请尝试使用 Firefox 或 Safari 转换此大文件，它们通常具有更高的限制。",
+			"mediabunny": {
+				"init": "本地视频引擎加载失败，视频转换可能不可用。",
+				"webcodecs": "当前浏览器缺少部分 WebCodecs 功能，部分视频无法转换。",
+				"discarded": "“{file}”有 {count} 条轨道无法保留，请检查下载结果。"
+			},
+			"invalid_channels": "无效声道数：{channels}"
+		},
+		"warnings": {
+			"settings_change": "为提高兼容性，已将“{file}”（{to}）的“{setting}”从“{oldValue}”调整为“{newValue}”。",
+			"file_type_mismatch": "“{filename}”扩展名为 {expected}，检测到的实际格式为 {actual}，可能影响转换。"
 		}
 	},
 	"privacy": {
 		"title": "隐私政策",
 		"summary": {
 			"title": "摘要",
-			"description": "VERT 的隐私政策非常简单：我们根本不收集或存储你的任何数据。我们不使用 cookie 或跟踪器，分析是完全私密的，所有转换（视频除外）都在你的浏览器本地进行。视频在下载后或一小时后删除，除非你明确授权存储；它只会用于故障排查。VERT 自托管 Coolify 实例用于托管网站和 vertd（用于视频转换），以及用于完全匿名和聚合分析的 Plausible 实例。<br/><br/>请注意，这可能仅适用于[vert_link]vert.sh[/vert_link]的官方 VERT 实例；第三方实例可能以不同方式处理你的数据。"
+			"description": "本站在浏览器中处理文件，不提供文件上传或账户服务。"
 		},
 		"conversions": {
 			"title": "转换",
@@ -328,6 +556,17 @@
 			"title": "联系",
 			"description": "如有问题，请发送电子邮件至：[email_link]hello@vert.sh[/email_link]。如果你使用的是第三方 VERT 实例，请联系该实例的托管者。"
 		},
-		"last_updated": "最后更新：2025-10-19"
+		"last_updated": "最后更新：2025-10-19",
+		"donations": {
+			"title": "捐赠",
+			"description": "本站不提供支付或捐赠集成。"
+		},
+		"debugging": {
+			"title": "问题诊断",
+			"description": "诊断报告仅在本机生成，不会自动上传。分享前请检查文件名等敏感信息。"
+		}
+	},
+	"toast": {
+		"insecure_context": "请通过 HTTPS 访问十三月格式转换，部分功能需要安全连接。"
 	}
 }

@@ -6,6 +6,7 @@ on:
 
 jobs:
     build_site:
+        if: github.repository == 'VERT-sh/VERT'
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -36,6 +37,7 @@ jobs:
                   path: "build/"
 
     deploy:
+        if: github.repository == 'VERT-sh/VERT'
         needs: build_site
         runs-on: ubuntu-latest
 

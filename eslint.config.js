@@ -28,7 +28,13 @@ export default ts.config(
 		},
 	},
 	{
-		ignores: ["build/", ".svelte-kit/", "dist/", "src/lib/paraglide/"],
+		ignores: [
+			"build/",
+			".svelte-kit/",
+			"dist/",
+			"src/lib/paraglide/",
+			"static/engines/",
+		],
 	},
 	{
 		files: ["**/*.ts", "**/*.svelte.ts", "**/*.svelte"],

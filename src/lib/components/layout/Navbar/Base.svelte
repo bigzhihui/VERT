@@ -186,7 +186,7 @@
 			class="w-28 h-full bg-accent rounded-xl items-center justify-center hidden md:flex"
 			href="/"
 		>
-			<div class="h-5 w-full">
+			<div class="h-10 w-full">
 				<Logo />
 			</div>
 		</a>

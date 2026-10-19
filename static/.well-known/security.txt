@@ -1,0 +1,5 @@
+Contact: mailto:support@afeiii.com
+Expires: 2027-10-19T00:00:00Z
+Preferred-Languages: zh, en
+Canonical: https://convert.afeiii.com/.well-known/security.txt
+Policy: https://convert.afeiii.com/privacy/

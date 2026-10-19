@@ -10,7 +10,7 @@
 		<div
 			class="h-14 bg-accent rounded-[14px] flex items-center justify-center"
 		>
-			<div class="w-28 h-5">
+			<div class="w-32 h-10">
 				<Logo />
 			</div>
 		</div>
