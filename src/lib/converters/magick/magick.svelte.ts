@@ -24,6 +24,7 @@ export class MagickConverter extends Converter {
 	public wasm: ArrayBuffer = null!;
 
 	private activeConversions = new Map<string, Worker>();
+	private wasmInitialization?: Promise<void>;
 
 	public supportedFormats = [
 		// manually tested formats
@@ -100,14 +101,26 @@ export class MagickConverter extends Converter {
 		this.log = (msg) => log(["converters", this.name], msg);
 		this.error = (msg) => error(["converters", this.name], msg);
 		this.log(`created converter`);
+		this.clearTimeout();
 		if (!browser) return;
-		this.initializeWasm();
+		// Ready to accept a conversion; download the engine only when one starts.
+		this.status = "ready";
 	}
 
-	private async initializeWasm() {
+	private initializeWasm(): Promise<void> {
+		if (this.wasm) return Promise.resolve();
+		return (this.wasmInitialization ??= this.downloadWasm().finally(() => {
+			this.wasmInitialization = undefined;
+		}));
+	}
+
+	private async downloadWasm() {
+		const controller = new AbortController();
+		const timeout = setTimeout(() => controller.abort(), 60000);
 		try {
-			this.status = "downloading";
-			const response = await fetch(magickWasm);
+			const response = await fetch(magickWasm, {
+				signal: controller.signal,
+			});
 			if (!response.ok) {
 				throw new Error(
 					`Failed to fetch WASM: ${response.status} ${response.statusText}`,
@@ -115,15 +128,17 @@ export class MagickConverter extends Converter {
 			}
 
 			this.wasm = await response.arrayBuffer();
-			this.status = "ready";
 		} catch (err) {
-			this.status = "error";
 			this.error(`Failed to load ImageMagick WASM: ${err}`);
 
 			ToastManager.add({
 				type: "error",
 				message: m["workers.errors.magick"](),
 			});
+			// Keep the converter available so the user's normal retry can download again.
+			throw err;
+		} finally {
+			clearTimeout(timeout);
 		}
 	}
 
@@ -249,7 +264,6 @@ export class MagickConverter extends Converter {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		...args: any[]
 	): Promise<VertFile> {
-		this.trackConversion(input);
 		this.log(`converting ${input.name} to ${to}`);
 
 		// handle converting from SVG manually because magick-wasm doesn't support it
@@ -268,6 +282,10 @@ export class MagickConverter extends Converter {
 			}
 		}
 
+		await this.initializeWasm();
+		if (input.cancelled) throw new Error("Conversion cancelled");
+
+		this.trackConversion(input);
 		const worker = new Worker(MagickWorker, {
 			type: "module",
 		});

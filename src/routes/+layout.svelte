@@ -27,6 +27,7 @@
 	import { converters } from "$lib/converters";
 	import { ToastManager } from "$lib/util/toast.svelte";
 	import { m } from "$lib/paraglide/messages";
+	import { siteContent } from "$lib/site-content";
 	import {
 		addLog,
 		installConsoleCapture,
@@ -34,6 +35,21 @@
 	} from "$lib/util/logger.svelte";
 
 	let { children } = $props();
+
+	const description = $derived.by(() => {
+		const route = page.url.pathname.replace(/\/+$/, "").slice(1);
+		const language = $locale === "en" ? "en" : "zh";
+		if (route in siteContent) {
+			return siteContent[route as keyof typeof siteContent][language]
+				.intro;
+		}
+		if (route === "formats") {
+			return language === "en"
+				? "Supported image, audio, document and video formats, tested conversion examples, browser requirements and limits for Thirteen Months Converter."
+				: "查看十三月格式转换支持的图片、音频、文档与视频格式、已实测的转换组合、浏览器要求及不支持的格式。";
+		}
+		return "免注册的浏览器本地格式转换工具。图片、音频、文档及支持的视频在你的设备上处理，不上传文件。实际支持范围受格式、浏览器与设备能力限制。";
+	});
 
 	let isAprilFools = $state(false);
 
@@ -169,24 +185,15 @@
 <svelte:head>
 	<title>{VERT_NAME} · 图片、音频、文档与视频格式转换</title>
 	<meta name="theme-color" content="#F2ABEE" />
-	<meta
-		name="description"
-		content="免注册的浏览器本地格式转换工具。图片、音频、文档及支持的视频在你的设备上处理，不上传文件。实际支持范围受格式、浏览器与设备能力限制。"
-	/>
+	<meta name="description" content={description} />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content={VERT_NAME} />
-	<meta
-		property="og:description"
-		content="文件在你的浏览器中转换，免注册、不上传文件。"
-	/>
+	<meta property="og:description" content={description} />
 	<meta property="og:url" content={SITE_URL + page.url.pathname} />
 	<meta property="og:image" content={SITE_URL + "/social.png"} />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={VERT_NAME} />
-	<meta
-		name="twitter:description"
-		content="图片、音频、文档及支持的视频，在浏览器中完成转换。"
-	/>
+	<meta name="twitter:description" content={description} />
 	<meta name="twitter:image" content={SITE_URL + "/social.png"} />
 	<link rel="manifest" href="/manifest.json" />
 	<link rel="canonical" href={SITE_URL + page.url.pathname} />

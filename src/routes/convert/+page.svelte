@@ -492,7 +492,7 @@
 	</div>
 
 	<div
-		class="w-full max-w-[778px] grid grid-cols-1 md:grid-cols-2 auto-rows-[240px] gap-4 md:p-0"
+		class="w-full max-w-[778px] grid grid-cols-1 md:grid-cols-2 auto-rows-[minmax(240px,auto)] gap-4 md:p-0"
 	>
 		{#each files.files as file, i (file.id)}
 			{#if files.files.length >= 2 && i === 1}

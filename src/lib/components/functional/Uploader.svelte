@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { UploadIcon } from "@lucide/svelte";
-	import Panel from "../visual/Panel.svelte";
 	import clsx from "clsx";
 	import { onMount } from "svelte";
 	import { effects, files } from "$lib/store/index.svelte";
@@ -65,18 +64,18 @@
 		classList,
 	)}
 >
-	<Panel
-		class="flex justify-center items-center w-full h-full flex-col pointer-events-none"
+	<span
+		class="bg-panel flex justify-center items-center w-full h-full flex-col pointer-events-none p-3 rounded-2.5xl shadow-panel"
 	>
-		<div
+		<span
 			class="w-16 h-16 bg-accent rounded-full flex items-center justify-center p-4"
 		>
 			<UploadIcon class="w-full h-full text-on-accent" />
-		</div>
-		<h2 class="text-center text-2xl font-semibold mt-4">
+		</span>
+		<span class="text-center text-2xl font-semibold mt-4">
 			{m["upload.uploader.text"]({
 				action: m["upload.uploader.convert"](),
 			})}
-		</h2>
-	</Panel>
+		</span>
+	</span>
 </button>

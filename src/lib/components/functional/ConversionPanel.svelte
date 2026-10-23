@@ -53,7 +53,7 @@
 			>
 				<RefreshCw size="24" />
 				{#if !compactActions}
-					<p>{m["convert.panel.convert_all"]()}</p>
+					<span>{m["convert.panel.convert_all"]()}</span>
 				{/if}
 			</button>
 			<button
@@ -67,7 +67,7 @@
 			>
 				<FolderArchiveIcon size="24" />
 				{#if !compactActions}
-					<p>{m["convert.panel.download_all"]()}</p>
+					<span>{m["convert.panel.download_all"]()}</span>
 				{/if}
 			</button>
 			{#if $isMobile}
@@ -79,7 +79,7 @@
 					onclick={() => files.removeAll()}
 				>
 					<TrashIcon size="24" />
-					<p>{m["convert.panel.remove_all"]()}</p>
+					<span>{m["convert.panel.remove_all"]()}</span>
 				</button>
 			{:else}
 				<Tooltip
