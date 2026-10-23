@@ -354,6 +354,7 @@
 		}
 
 		onselect?.(option);
+		open = false;
 	};
 
 	const selectCategory = (category: string) => {
@@ -486,12 +487,12 @@
 		onclick={() => clickDropdown()}
 		{disabled}
 	>
-		<!-- <p>{selected}</p> -->
-		<div
+		<!-- <span>{selected}</span> -->
+		<span
 			class="grid grid-cols-1 grid-rows-1 w-fit flex-grow-0 max-h-[2.5rem] overflow-hidden"
 		>
 			{#key selected}
-				<p
+				<span
 					in:fade={{
 						duration,
 						easing: quintOut,
@@ -503,18 +504,18 @@
 					class="col-start-1 row-start-1 text-center font-body font-medium truncate max-w-[4rem]"
 				>
 					{selected || "N/A"}
-				</p>
+				</span>
 			{/key}
 			{#if currentCategory}
 				{#each categories[currentCategory].formats as option}
-					<p
+					<span
 						class="col-start-1 row-start-1 invisible pointer-events-none truncate max-w-[2.5rem]"
 					>
 						{option}
-					</p>
+					</span>
 				{/each}
 			{/if}
-		</div>
+		</span>
 		<ChevronDown
 			class="w-4 h-4 ml-3 mt-0.5 flex-shrink-0"
 			style="transform: rotate({open

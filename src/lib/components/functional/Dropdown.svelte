@@ -132,14 +132,14 @@
 		onclick={toggle}
 		{disabled}
 	>
-		<div
+		<span
 			class={clsx(
 				"grid grid-cols-1 grid-rows-1 min-w-0 flex-grow-1 truncate",
 				style === "inline" && "max-w-full",
 			)}
 		>
 			{#key selected}
-				<p
+				<span
 					in:fade={{
 						duration,
 						easing: quintOut,
@@ -161,19 +161,19 @@
 						options.find((opt) => getValue(opt) === selected) ||
 							selected,
 					)}
-				</p>
+				</span>
 			{/key}
 			{#each options as option}
-				<p
+				<span
 					class={clsx(
 						"col-start-1 row-start-1 pointer-events-none",
 						style === "inline" ? "hidden" : "invisible",
 					)}
 				>
 					{getLabel(option)}
-				</p>
+				</span>
 			{/each}
-		</div>
+		</span>
 		<ChevronDown
 			class="w-4 h-4 ml-1.5 mt-0.5 flex-shrink-0"
 			style="transform: rotate({open

@@ -196,6 +196,7 @@
 		<div class="w-0.5 bg-separator h-full hidden md:flex"></div>
 		<Tooltip text={m["navbar.toggle_theme"]()} position="right">
 			<button
+				aria-label={m["navbar.toggle_theme"]()}
 				onclick={() => {
 					const isDark =
 						document.documentElement.classList.contains("dark");

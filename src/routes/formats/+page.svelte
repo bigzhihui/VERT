@@ -35,11 +35,11 @@
 	];
 </script>
 
-<svelte:head
-	><title
+<svelte:head>
+	<title
 		>{en ? "Formats and limitations" : "支持范围与实测结果"} · 十三月格式转换</title
-	></svelte:head
->
+	>
+</svelte:head>
 <article
 	class="mx-auto w-full max-w-4xl rounded-2xl bg-panel p-6 md:p-10 shadow-panel font-normal"
 >

@@ -258,19 +258,25 @@ export class VertFile {
 			)
 				return false;
 
-			const fromInfo = converter.supportedFormats.find(
-				(info) => info.name === from,
-			);
 			const toInfo = converter.supportedFormats.find(
 				(info) => info.name === to,
 			);
-			return (
-				!!fromInfo &&
-				!!toInfo &&
-				fromInfo.fromSupported &&
-				toInfo.toSupported &&
-				(fromInfo.isNative || toInfo.isNative)
-			);
+			const sources =
+				from === ".zip" && this.archiveFormats?.length
+					? this.archiveFormats
+					: [from];
+			return sources.every((source) => {
+				const fromInfo = converter.supportedFormats.find(
+					(info) => info.name === source,
+				);
+				return (
+					!!fromInfo &&
+					!!toInfo &&
+					fromInfo.fromSupported &&
+					toInfo.toSupported &&
+					(fromInfo.isNative || toInfo.isNative)
+				);
+			});
 		});
 	}
 

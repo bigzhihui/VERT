@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { unzipSync } from "fflate";
 import { Input, BufferSource, MATROSKA, ALL_FORMATS } from "mediabunny";
 import { startServer } from "./serve.mjs";
+import { verifyDeferredImages } from "./smoke-deferred-images.mjs";
 
 const local = process.env.BASE_URL ? null : await startServer();
 const base = process.env.BASE_URL || local.url;
@@ -143,6 +144,7 @@ async function convert(file, to) {
 	return data;
 }
 try {
+	await verifyDeferredImages(browser, base);
 	await home();
 	const html = await (await context.request.get(base + "/")).text();
 	expect(html).toContain("文件格式转换");
