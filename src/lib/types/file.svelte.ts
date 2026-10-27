@@ -1,4 +1,5 @@
 import { byNative, converters } from "$lib/converters";
+import { usageEvent, usageOperation } from "$lib/afeiii-usage";
 import type { Converter } from "$lib/converters/converter.svelte";
 import { m } from "$lib/paraglide/messages";
 import { ToastManager } from "$lib/util/toast.svelte";
@@ -376,6 +377,7 @@ export class VertFile {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public async convert(...args: any[]) {
 		if (this.disposed) return;
+		const usage = usageOperation('convert');
 		if (!this.retryingFallback) this.attemptedConverters.clear();
 		this.cancelled = false;
 		let res: VertFile | undefined;
@@ -493,6 +495,7 @@ export class VertFile {
 				return;
 			}
 			this.result = res;
+			usage.success();
 			if (this.fallbackToastId !== null) {
 				ToastManager.remove(this.fallbackToastId);
 				this.fallbackToastId = null;
@@ -503,6 +506,7 @@ export class VertFile {
 			}
 		} catch (err) {
 			if (this.disposed) return;
+			if (!this.cancelled) usage.failure();
 			if (!this.cancelled) this.toastErr(err);
 
 			const compatibleConverters = this.findConverters([
@@ -883,6 +887,7 @@ export class VertFile {
 
 				const writable = await handle.createWritable();
 				await resultFile.stream().pipeTo(writable);
+				usageEvent('download', 'convert');
 				this.blobUrl = undefined;
 				return;
 			} catch (err) {
@@ -911,6 +916,7 @@ export class VertFile {
 		a.target = "_blank";
 		a.style.display = "none";
 		a.click();
+		usageEvent('download', 'convert');
 		setTimeout(() => {
 			URL.revokeObjectURL(blob);
 		}, 30000);
